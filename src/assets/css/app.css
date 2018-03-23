@@ -14,7 +14,7 @@ body {
     font-size: 25px;
     padding: 50px;
     text-align: center;
-    height: 350px;
+    height: 70vh;
 }
 
 .app .logo {
@@ -98,4 +98,10 @@ body {
     to {
         transform: rotate(-360deg) rotateY(0deg);
     }
+}
+
+/******************* Sign In Form ********************/
+.centerDiv{
+    left: 50%;
+    transform: translate(-50% 0);
 }
