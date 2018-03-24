@@ -1,23 +1,67 @@
-import React from 'react';
+import React, {Component} from 'react';
 import '../assets/css/app.css';
 import logo from '../assets/images/logo.svg';
-import shamrockL from '../assets/images/shamrock-l.png';
-import shamrockR from '../assets/images/shamrock-r.png';
-import gold from '../assets/images/pot-o-gold.png';
+import Cell from '../components/cell/cell';
 
-const App = () => (
-    <div>
-        <div className="app">
-            <img src={gold} className="gold left" />
-            <img src={logo} className="logo rotate"/>
-            <div className="title-container">
-                <img src={shamrockL} className="clover left rotate3d-right" />
-                <h1>Welcome to React</h1>
-                <img src={shamrockR} className="clover right rotate3d-left" />
+
+class App extends Component {
+
+    constructor( props ){
+        super( props );
+        this.state = {
+            cellContents: ['','','','','','','','','']
+        }
+        this.handleChildClick = this.handleChildClick.bind(this);
+        this.cellCharacters = ['x', 'o'];
+        this.currentCellCharacter = 0;
+    }
+
+    toogleCharacter(){
+        this.currentCellCharacter = 1 - this.currentCellCharacter;
+    }
+
+    handleChildClick( childIndex ){
+        console.log("child clicked");
+        const currentContents = this.state.cellContents.slice()
+        currentContents[childIndex] = this.cellCharacters[this.currentCellCharacter];
+        this.setState({
+            cellContents: currentContents
+        });
+        this.toogleCharacter();
+    }
+
+    makeCells(){
+        const cells = [];
+        let count = 0;
+
+        var sizeDimension = {
+            cellHeight: 100/this.props.dimension.col + '%',
+            cellWidth: 100/this.props.dimension.row + '%'
+        }
+
+        for(let rowI = 0; rowI < this.props.dimension.row; rowI++){
+            for(let colI = 0; colI < this.props.dimension.col; colI++){
+                cells.push( <Cell clickHandler = { this.handleChildClick } key={ count } dimension = { sizeDimension } index={ count } text={ this.state.cellContents[count] } />);
+                count++;
+            }
+        }
+        return cells;
+    }
+
+    render(){
+        const height = {
+            height: '60vh'
+        }
+
+        return(
+            <div style={ height }>
+                <div className="app">
+                    <img src={logo} className="logo rotate"/>
+                </div>
+                { this.makeCells() }
             </div>
-            <img src={gold} className="gold right"/>
-        </div>
-    </div>
-);
+        )
+    }
+};
 
 export default App;
