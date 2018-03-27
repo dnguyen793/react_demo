@@ -15,15 +15,30 @@ class SignIn extends Component{
     }
 
     handleInputChange( event ){
-        // console.log('event: ', event.target);
-        // console.log('state: ' , this.state.form);
+        console.log('event: ', event.target);
+        console.log('state: ' , this.state.form);
 
-        const { name, value } = event.target;
-        const { form } = this.state;
-        form[name] = value;
+        // const { name, value } = event.target;
+        // const { form } = this.state;
+        // form[name] = value;
         // console.log('name: ', form[name], 'value: ', value );
-        this.setState({form: { ...form }});
+        // this.setState({form: { ...form }});
 
+        /************/
+        var fieldName = event.target.name;
+        var fieldValue = event.target.value;
+        console.log(fieldName, fieldValue);
+
+        var newState = this.state;
+
+        // var newState = {};
+        // for(var key in this.state.form){
+        //     newState.form[key] = this.state.form[key];
+        // }
+
+        newState.form[fieldName] = fieldValue;
+
+        this.setState( newState );
     }
 
     handleSubmitBtn( event ){
